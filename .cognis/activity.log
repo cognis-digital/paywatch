@@ -37,3 +37,4 @@
 2025-12-17T08:56:16  style: formatting (we chose violence on tabs vs spaces)
 2026-04-13T15:13:23  chore: bump dev tooling
 2024-06-01T14:54:54  feat(cache): assert exit codes in tests
+2024-07-03T09:11:01  refactor(report): improve the demo scenario
