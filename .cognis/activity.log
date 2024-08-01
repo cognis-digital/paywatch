@@ -39,3 +39,4 @@
 2024-06-01T14:54:54  feat(cache): assert exit codes in tests
 2024-07-03T09:11:01  refactor(report): improve the demo scenario
 2024-07-17T16:28:08  style(scan): assert exit codes in tests
+2024-08-01T11:45:15  ci(detect): document the config keys
