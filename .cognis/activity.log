@@ -46,3 +46,4 @@
 2024-10-16T15:53:43  build(cli): add a fast path for the common case
 2024-10-31T10:10:50  chore(tests): clarify the README quickstart
 2024-11-14T17:27:57  test: trust, but verify
+2024-12-17T12:44:04  chore: feed the FOUNDRY
