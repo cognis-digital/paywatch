@@ -49,3 +49,4 @@
 2024-12-17T12:44:04  chore: feed the FOUNDRY
 2024-12-31T19:01:11  fix: handle empty input gracefully
 2025-01-15T14:18:18  feat(output): memoize repeated lookups
+2025-01-30T09:35:25  docs(detect): improve error messages with context
