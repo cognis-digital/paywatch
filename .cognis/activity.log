@@ -51,3 +51,4 @@
 2025-01-15T14:18:18  feat(output): memoize repeated lookups
 2025-01-30T09:35:25  docs(detect): improve error messages with context
 2025-02-13T16:52:32  style(engine): memoize repeated lookups
+2025-03-18T11:09:39  style(engine): add a dry-run flag
