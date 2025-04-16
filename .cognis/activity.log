@@ -53,3 +53,4 @@
 2025-02-13T16:52:32  style(engine): memoize repeated lookups
 2025-03-18T11:09:39  style(engine): add a dry-run flag
 2025-04-01T18:26:46  fix(mcp): add --fail-on threshold handling
+2025-04-16T13:43:53  refactor(cli): add a dry-run flag
