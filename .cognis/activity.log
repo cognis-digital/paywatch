@@ -54,3 +54,4 @@
 2025-03-18T11:09:39  style(engine): add a dry-run flag
 2025-04-01T18:26:46  fix(mcp): add --fail-on threshold handling
 2025-04-16T13:43:53  refactor(cli): add a dry-run flag
+2025-05-01T08:00:00  perf(rules): fix off-by-one in line numbers
