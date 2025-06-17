@@ -56,3 +56,4 @@
 2025-04-16T13:43:53  refactor(cli): add a dry-run flag
 2025-05-01T08:00:00  perf(rules): fix off-by-one in line numbers
 2025-06-02T15:17:07  ci(ci): dedupe overlapping findings
+2025-06-17T10:34:14  chore(cache): fix off-by-one in line numbers
