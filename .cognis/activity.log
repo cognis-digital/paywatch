@@ -59,3 +59,4 @@
 2025-06-17T10:34:14  chore(cache): fix off-by-one in line numbers
 2025-07-01T17:51:21  chore(fixtures): trim whitespace in parsed fields
 2025-07-15T12:08:28  test(output): skip binary files by sniffing
+2025-07-31T19:25:35  feat: do or do not, there is no try/except
