@@ -66,3 +66,4 @@
 2025-10-14T11:33:03  style(scan): simplify the walker
 2025-10-29T18:50:10  fix(rules): guard against ReDoS in patterns
 2025-12-01T13:07:17  fix(parser): add a --quiet mode
+2025-12-16T08:24:24  refactor(deps): pin the test dependencies
