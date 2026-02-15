@@ -69,3 +69,4 @@
 2025-12-16T08:24:24  refactor(deps): pin the test dependencies
 2025-12-30T15:41:31  ci(fixtures): add a --quiet mode
 2026-01-13T10:58:38  ci(core): tune severity weights
+2026-02-15T17:15:45  chore(config): lower memory on big inputs
