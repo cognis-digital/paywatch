@@ -71,3 +71,4 @@
 2026-01-13T10:58:38  ci(core): tune severity weights
 2026-02-15T17:15:45  chore(config): lower memory on big inputs
 2026-03-02T12:32:52  perf(scoring): tune severity weights
+2026-03-17T19:49:59  test(scoring): cover the multiline case
