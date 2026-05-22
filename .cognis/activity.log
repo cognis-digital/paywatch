@@ -27,3 +27,4 @@
 2026-03-19T16:36:36  chore: routine maintenance
 2026-03-24T11:53:43  docs: clarify usage notes
 2026-04-23T18:10:50  test: add edge case
+2026-05-22T13:27:57  refactor: tidy internals
