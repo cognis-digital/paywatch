@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: paywatch, labels: { app: paywatch } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: paywatch } }
+  template:
+    metadata: { labels: { app: paywatch } }
+    spec:
+      containers:
+        - name: paywatch
+          image: ghcr.io/cognis-digital/paywatch:latest
+          ports: [{ containerPort: 8000 }]
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: paywatch }
+spec:
+  selector: { app: paywatch }
+  ports: [{ port: 80, targetPort: 8000 }]
