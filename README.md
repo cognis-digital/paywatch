@@ -36,9 +36,11 @@ consumer+SMB crossover, viral
 <a name="features"></a>
 ## Features
 
-- ✅ Todo
-- ✅ Fixme
-- ✅ Xxx
+- ✅ Normalize Merchant
+- ✅ Load Transactions
+- ✅ Detect Subscriptions
+- ✅ Summarize
+- ✅ Subscription To Dict
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
