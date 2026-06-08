@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/paywatch",
+  "version": "0.2.0",
+  "description": "JavaScript port of paywatch (Cognis Neural Suite)",
+  "bin": {
+    "paywatch": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
