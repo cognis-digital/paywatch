@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-paywatch
+pip install "git+https://github.com/cognis-digital/paywatch.git"
 paywatch scan .            # → prioritized findings in seconds
 ```
 
@@ -50,7 +50,7 @@ consumer+SMB crossover, viral
 ## Quick start
 
 ```bash
-pip install cognis-paywatch
+pip install "git+https://github.com/cognis-digital/paywatch.git"
 paywatch --version
 paywatch scan .                       # scan current project
 paywatch scan . --format json         # machine-readable
