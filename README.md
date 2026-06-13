@@ -20,6 +20,32 @@ pip install cognis-paywatch
 paywatch scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+`paywatch` detects recurring charges and subscriptions from a bank/Plaid transactions CSV.
+
+1. **Install**:
+   ```bash
+   pip install -e .
+   paywatch --version
+   ```
+2. **Scan** a transactions CSV for recurring charges:
+   ```bash
+   paywatch scan transactions.csv
+   ```
+3. **Focus on waste** — show only subscriptions that look forgotten/unused:
+   ```bash
+   paywatch scan transactions.csv --forgotten-only
+   ```
+4. **Read the output** as JSON (summary + per-subscription cadence, next charge, annualized cost):
+   ```bash
+   paywatch scan transactions.csv --format json | jq '.summary'
+   ```
+5. **Automate** — pipe a monthly export through paywatch and archive the JSON report:
+   ```bash
+   paywatch scan "$HOME/exports/$(date +%Y-%m).csv" --format json > subs.json
+   ```
+
 ## Contents
 
 - [Why paywatch?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
