@@ -105,12 +105,30 @@ def load_transactions(path: str) -> list[Transaction]:
 
     Recognized headers (case-insensitive): date; description/name/memo/merchant;
     amount. A separate debit/credit column is also supported.
+
+    Raises:
+        FileNotFoundError: if *path* does not exist.
+        PermissionError: if the file cannot be read.
+        ValueError: if the file is not a valid CSV or lacks required columns.
     """
     txns: list[Transaction] = []
-    with open(path, newline="", encoding="utf-8-sig") as fh:
-        reader = csv.DictReader(fh)
-        if not reader.fieldnames:
-            raise ValueError("CSV has no header row")
+    try:
+        fh = open(path, newline="", encoding="utf-8-sig")
+    except FileNotFoundError:
+        raise
+    except PermissionError:
+        raise
+    except OSError as exc:
+        raise ValueError(f"cannot open file: {exc}") from exc
+
+    try:
+        try:
+            reader = csv.DictReader(fh)
+            if not reader.fieldnames:
+                raise ValueError("CSV has no header row")
+        except UnicodeDecodeError as exc:
+            raise ValueError(f"CSV is not valid UTF-8: {exc}") from exc
+
         cols = {c.lower().strip(): c for c in reader.fieldnames}
 
         def pick(*names):
@@ -127,37 +145,43 @@ def load_transactions(path: str) -> list[Transaction]:
                 "CSV must have date, description, and amount columns; "
                 f"found {reader.fieldnames}"
             )
-        for row in reader:
-            raw_date = (row.get(date_col) or "").strip()
-            raw_desc = (row.get(desc_col) or "").strip()
-            raw_amt = (row.get(amt_col) or "").strip()
-            if not raw_date or not raw_amt:
-                continue
-            try:
-                date = _parse_date(raw_date)
-                amount = _parse_amount(raw_amt)
-            except ValueError:
-                continue
-            # Treat money-out as a positive charge. Banks vary on sign
-            # convention; a dedicated "debit" column is always money-out.
-            if amt_col.lower() == "debit":
-                charge = abs(amount)
-            else:
-                # negative = money out in most Plaid/bank exports
-                charge = -amount if amount < 0 else 0.0
-                if charge == 0.0 and amount > 0:
-                    # some exports list charges as positive; keep if no negatives seen
-                    charge = amount
-            if charge <= 0:
-                continue
-            txns.append(
-                Transaction(
-                    date=date,
-                    description=raw_desc,
-                    amount=round(charge, 2),
-                    merchant=normalize_merchant(raw_desc),
+        try:
+            for row in reader:
+                raw_date = (row.get(date_col) or "").strip()
+                raw_desc = (row.get(desc_col) or "").strip()
+                raw_amt = (row.get(amt_col) or "").strip()
+                if not raw_date or not raw_amt:
+                    continue
+                try:
+                    date = _parse_date(raw_date)
+                    amount = _parse_amount(raw_amt)
+                except ValueError:
+                    continue
+                # Treat money-out as a positive charge. Banks vary on sign
+                # convention; a dedicated "debit" column is always money-out.
+                if amt_col.lower() == "debit":
+                    charge = abs(amount)
+                else:
+                    # negative = money out in most Plaid/bank exports
+                    charge = -amount if amount < 0 else 0.0
+                    if charge == 0.0 and amount > 0:
+                        # some exports list charges as positive;
+                        # keep if no negatives seen
+                        charge = amount
+                if charge <= 0:
+                    continue
+                txns.append(
+                    Transaction(
+                        date=date,
+                        description=raw_desc,
+                        amount=round(charge, 2),
+                        merchant=normalize_merchant(raw_desc),
+                    )
                 )
-            )
+        except UnicodeDecodeError as exc:
+            raise ValueError(f"CSV contains non-UTF-8 data: {exc}") from exc
+    finally:
+        fh.close()
     return txns
 
 
@@ -248,6 +272,19 @@ def _cluster_by_amount(items: list[Transaction]) -> list[list[Transaction]]:
 
 
 def summarize(subs: list[Subscription]) -> dict:
+    """Return aggregate statistics for a list of detected subscriptions.
+
+    Safe to call with an empty list; all monetary values will be zero.
+    """
+    if not subs:
+        return {
+            "subscription_count": 0,
+            "total_annualized_cost": 0.0,
+            "estimated_monthly_cost": 0.0,
+            "likely_forgotten_count": 0,
+            "likely_forgotten_annual_waste": 0.0,
+            "price_increase_count": 0,
+        }
     total_annual = round(sum(s.annualized_cost for s in subs), 2)
     monthly = round(total_annual / 12.0, 2)
     forgotten = [s for s in subs if s.likely_forgotten]

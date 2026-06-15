@@ -29,7 +29,7 @@ def _fmt_money(v: float) -> str:
 def _render_table(subs, summary) -> str:
     lines = []
     lines.append("")
-    lines.append(f"PAYWATCH  recurring-charge report")
+    lines.append("PAYWATCH  recurring-charge report")
     lines.append("=" * 78)
     if not subs:
         lines.append("No recurring charges detected.")
@@ -102,11 +102,19 @@ def main(argv=None) -> int:
         except FileNotFoundError:
             print(f"error: file not found: {args.csv}", file=sys.stderr)
             return 2
+        except PermissionError:
+            print(f"error: permission denied: {args.csv}", file=sys.stderr)
+            return 2
         except ValueError as e:
             print(f"error: {e}", file=sys.stderr)
             return 2
 
-        subs = detect_subscriptions(txns)
+        try:
+            subs = detect_subscriptions(txns)
+        except Exception as e:  # noqa: BLE001
+            print(f"error: detection failed: {e}", file=sys.stderr)
+            return 1
+
         if args.forgotten_only:
             subs = [s for s in subs if s.likely_forgotten]
         summary = summarize(subs)
@@ -118,7 +126,11 @@ def main(argv=None) -> int:
                 "summary": summary,
                 "subscriptions": [subscription_to_dict(s) for s in subs],
             }
-            print(json.dumps(payload, indent=2))
+            try:
+                print(json.dumps(payload, indent=2))
+            except (TypeError, ValueError) as e:
+                print(f"error: could not serialize output: {e}", file=sys.stderr)
+                return 1
         else:
             print(_render_table(subs, summary))
         return 0
