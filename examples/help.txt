@@ -1,0 +1,13 @@
+$ paywatch-emit --help
+
+usage: paywatch [-h] [--version] {scan} ...
+
+Detect recurring charges and subscriptions from a bank/Plaid CSV.
+
+positional arguments:
+  {scan}
+    scan      Scan a CSV for recurring charges.
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit

@@ -1,0 +1,3 @@
+$ paywatch-emit --version
+
+paywatch 1.0.0

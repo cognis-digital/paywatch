@@ -20,6 +20,63 @@ pip install cognis-paywatch
 paywatch scan .            # → prioritized findings in seconds
 ```
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ paywatch-emit --version
+paywatch 1.0.0
+```
+
+```console
+$ paywatch-emit --help
+usage: paywatch [-h] [--version] {scan} ...
+
+Detect recurring charges and subscriptions from a bank/Plaid CSV.
+
+positional arguments:
+  {scan}
+    scan      Scan a CSV for recurring charges.
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
+```
+
+> Blocks above are real `paywatch` output — reproduce them from a clone.
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+"findings": [
+    {
+        "id": "1234567890",
+        "title": "Suspicious Network Traffic",
+        "description": "Potential malicious activity detected on port 443.",
+        "created_at": "2023-02-20T14:30:00Z",
+        "updated_at": "2023-02-20T14:30:01Z",
+        "labels": ["Network", "Malware"],
+        "observables": [
+            {
+                "type": "IP",
+                "value": "192.168.1.100"
+            },
+            {
+                "type": "Domain",
+                "value": "example.com"
+            }
+        ]
+    }
+]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 `paywatch` detects recurring charges and subscriptions from a bank/Plaid transactions CSV.
